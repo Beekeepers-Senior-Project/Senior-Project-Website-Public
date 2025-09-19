@@ -16,21 +16,21 @@ export function Navbar() {
           <NavigationMenuLink
             asChild
           >
-            <Link to="/Senior-Project-Website" className="px-4 text-lg text-foreground font-bold">Beekeepers Senior Project</Link>
+            <Link to="/Senior-Project-Website-Public" className="px-4 text-lg text-foreground font-bold">Beekeepers Senior Project</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink
             asChild
           >
-            <Link to="/Senior-Project-Website/team" className={cn(navigationMenuTriggerStyle())}> Team </Link>
+            <Link to="/Senior-Project-Website-Public/team" className={cn(navigationMenuTriggerStyle())}> Team </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink
             asChild
           >
-            <Link to="/Senior-Project-Website/time" className={cn(navigationMenuTriggerStyle())}> Time Tracking </Link>
+            <Link to="/Senior-Project-Website-Public/time" className={cn(navigationMenuTriggerStyle())}> Time Tracking </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -45,7 +45,7 @@ export function Navbar() {
           <NavigationMenuLink
             asChild
           >
-            <Link to="/Senior-Project-Website/agendas" className={cn(navigationMenuTriggerStyle())}> Agendas </Link>
+            <Link to="/Senior-Project-Website-Public/agendas" className={cn(navigationMenuTriggerStyle())}> Agendas </Link>
           </NavigationMenuLink>
         </NavigationMenuItem> */}
       </NavigationMenuList>

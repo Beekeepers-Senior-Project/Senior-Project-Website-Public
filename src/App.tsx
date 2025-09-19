@@ -10,10 +10,10 @@ function App() {
     <div className="light bg-background">
       <Navbar />
       <Routes>
-        <Route path="/Senior-Project-Website" element={<Landing />} />
-        <Route path="/Senior-Project-Website/agendas" element={<Agendas />} />
-        <Route path="/Senior-Project-Website/team" element={<TeamOverview />} />
-        <Route path="/Senior-Project-Website/time" element={<Landing />} />
+        <Route path="/Senior-Project-Website-Public" element={<Landing />} />
+        <Route path="/Senior-Project-Website-Public/agendas" element={<Agendas />} />
+        <Route path="/Senior-Project-Website-Public/team" element={<TeamOverview />} />
+        <Route path="/Senior-Project-Website-Public/time" element={<Landing />} />
       </Routes>
     </div>
   );

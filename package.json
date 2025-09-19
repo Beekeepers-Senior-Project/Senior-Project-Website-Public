@@ -2,7 +2,7 @@
   "name": "beekeepers-site",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://beekeepers-senior-project.github.io/Senior-Project-Website",
+  "homepage": "https://beekeepers-senior-project.github.io/Senior-Project-Website-Public",
   "dependencies": {
     "@craco/craco": "^7.1.0",
     "@radix-ui/react-navigation-menu": "^1.2.14",
