@@ -31,10 +31,10 @@ function TeamOverview() {
 
             <div className="container grid gap-4 grid-cols-1 lg:grid-cols-2">
                 <TeamMemberCard name="Charles Von Goins II" role="Project Lead" bio={charlesBio} profilePicUrl={charlesHeadshot}/>
-                <TeamMemberCard name="Dylan Morton" role="TBD" bio={dylanBio} profilePicUrl={dylanHeadshot}/>
+                <TeamMemberCard name="Dylan Morton" role="Integration/Devops Lead" bio={dylanBio} profilePicUrl={dylanHeadshot}/>
                 <TeamMemberCard name="Joseph Moran" role="Communications Lead" bio={joeBio} profilePicUrl={joeHeadshot}/>
-                <TeamMemberCard name="Josiah Claudio" role="TBD" bio={josiahBio} profilePicUrl={josiahHeadshot}/>
-                <TeamMemberCard name="Reid Taylor" role="TBD" bio={reidBio} profilePicUrl={reidHeadshot}/>
+                <TeamMemberCard name="Josiah Claudio" role="Backend Lead" bio={josiahBio} profilePicUrl={josiahHeadshot}/>
+                <TeamMemberCard name="Reid Taylor" role="Backend Lead" bio={reidBio} profilePicUrl={reidHeadshot}/>
                 <TeamMemberCard name="Christopher Wake" role="Faculty Coach" bio={chrisBio} profilePicUrl={chrisHeadshot}/>
             </div>
         </div>
