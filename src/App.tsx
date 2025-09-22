@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Landing from './components/Landing';
 import Agendas from './components/Agendas';
 import TeamOverview from './components/TeamOverview';
+import TimeTracking from './components/TimeTracking';
 //import TimeTracking from './components/TimeTracking';
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
         <Route path="/Senior-Project-Website-Public" element={<Landing />} />
         <Route path="/Senior-Project-Website-Public/agendas" element={<Agendas />} />
         <Route path="/Senior-Project-Website-Public/team" element={<TeamOverview />} />
-        <Route path="/Senior-Project-Website-Public/time" element={<Landing />} />
+        <Route path="/Senior-Project-Website-Public/time" element={<TimeTracking />} />
       </Routes>
     </div>
   );

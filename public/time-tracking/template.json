@@ -1,0 +1,15 @@
+[
+    {
+        "label": "Week X",
+        "startDay": "Monday of the week in YYYY-MM-DD",
+        "hoursWorked": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+    }
+]
