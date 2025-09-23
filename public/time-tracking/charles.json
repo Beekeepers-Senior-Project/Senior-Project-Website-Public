@@ -1,7 +1,7 @@
 [
     {
-        "label": "Week X",
-        "startDay": "Monday of the week in YYYY-MM-DD",
+        "label": "Week 1",
+        "startDay": "2025-09-01",
         "hoursWorked": [
             0,
             0,

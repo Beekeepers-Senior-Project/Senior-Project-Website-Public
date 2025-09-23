@@ -4,7 +4,6 @@ import Landing from './components/Landing';
 import Agendas from './components/Agendas';
 import TeamOverview from './components/TeamOverview';
 import TimeTracking from './components/TimeTracking';
-//import TimeTracking from './components/TimeTracking';
 
 function App() {
   return (
