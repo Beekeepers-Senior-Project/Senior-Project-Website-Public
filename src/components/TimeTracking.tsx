@@ -1,85 +1,94 @@
 import { useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "./ui/table";
-
-const defaultTimeMap: Map<string, SingleUserWeekBlockProps[]> = new Map();
+import { Card } from "./ui/card";
 
 /**
- * Map names of users to their time tracking json routes
+ * Placeholder for loading data
  */
-const NameToJson: Map<string, string> = new Map();
-NameToJson.set("Joseph Moran", "time-tracking/joe.json");
-NameToJson.set("Charles Von Goins II", "time-tracking/charles.json");
-NameToJson.set("Dylan Morton", "time-tracking/dylan.json");
-NameToJson.set("Reid Taylor", "time-tracking/reid.json");
-NameToJson.set("Josiah Claudio", "time-tracking/josiah.json")
+const defaultTeamTime = {
+    "members": ["Joseph Moran", "Charles von Goins II", "Josiah Claudio", "Reid Taylor", "Dylan Morton"],
+    "weeks": [
+        {
+            "label": "Week 0",
+            "startDay": "2025-09-01",
+            "hours": [
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0]
+            ]
+        }
+    ]
+}
 
-type SingleUserWeekBlockProps = {
+const timeDataPath = "time-tracking/team.json";
+
+type WeekBlockJSON = {
     label: string,
-    startDay: Date,
-    hoursWorked: number[]
+    startDay: string,
+    hours: number[][]
 }
 
-type FullTeamWeekBlockProps = {
-    label: String,
-    startDay: Date,
-    timeMap: Map<String, SingleUserWeekBlockProps>
+type TeamTimeJSON = {
+    members: string[]
+    weeks: WeekBlockJSON[]
 }
 
-type WeekBlockJson = {
-    label: string,
-    startDay: string, // Will need to be converted to date obj
-    hoursWorked: number[]
+type TeamWeekBlockProps = {
+    members: string[]
+    week: WeekBlockJSON
 }
 
-function dateIterate(initial: Date, inc: number): Date {
+/**
+ * Increment a date by a set number of days, have to use seconds as timezones make this suprisingly difficult
+ */
+function incrementDate(initial: Date, inc: number): Date {
     const secInDay = 86400000;
     const newDate = new Date(initial.getTime() + inc * secInDay);
     return newDate;
 }
 
-function formatDate(date: Date): String {
+/**
+ * Format a date in MM/DD/YYYY format
+ */
+function formatDate(date: Date): string {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
 }
 
-async function fetchMemberTime(path: string): Promise<SingleUserWeekBlockProps[]>{
-    return new Promise((res, rej) => {
-        fetch(path)
+/**
+ * Fetch and process time tracking data from json statically hosted by github pages
+ */
+async function fetchTime(): Promise<TeamTimeJSON>{
+    return new Promise((res) => {
+        fetch(timeDataPath)
         .then(res => res.json())
-        .then((json: WeekBlockJson[]) => {
-            const mapped: SingleUserWeekBlockProps[] = json.map((raw: WeekBlockJson) => {
-                const [year, month, day] = raw.startDay.split("-").map(Number);
-                return {
-                    label: raw.label,
-                    hoursWorked: raw.hoursWorked,
-                    startDay: new Date(year, month - 1, day)
-                };
-            });
-            res(mapped);
+        .then((json: TeamTimeJSON) => {
+            json.weeks = json.weeks.reverse();
+            res(json);
         })
         .catch(err => {
             console.error(err);
-            res([]);
+            res(defaultTeamTime);
         });
     })
 }
 
 function TimeTracking() {
-    const [selectedUser] = useState("Team Stats");
-    const [timeMap, setTimeMap] = useState<Map<string, SingleUserWeekBlockProps[]>>(defaultTimeMap);
+    const [members, setMembers] = useState<string[]>(defaultTeamTime.members);
+    const [weeks, setWeeks] = useState<WeekBlockJSON[]>(defaultTeamTime.weeks);
 
-    /** Fetch JSON time tracking data */
+    /** Fetch JSON time tracking data once on initialization */
     useEffect(() => {
-        const newMap: Map<string, SingleUserWeekBlockProps[]> = new Map();
-        const fetchData = async () => {
-            for(const [key, value] of NameToJson.entries()){
-                newMap.set(key, await fetchMemberTime(value));
-            }
-            setTimeMap(newMap);
+        const run = async () => {
+            const map = await fetchTime();
+            setMembers(map.members);
+            setWeeks(map.weeks);
         }
-        fetchData();
+        run();
     }, [])
 
     return (
@@ -92,56 +101,66 @@ function TimeTracking() {
             </div>
 
             <div className="container">
-                <div>{selectedUser}</div>
-                {timeMap.get("Joseph Moran")?.map((week) => {
-                    return <SingleUserWeekBlock key={week.label} {...week} />
+                {weeks.map((week) => {
+                    return <FullTeamWeekBlock key={week.label} members={members} week={week}></FullTeamWeekBlock>
                 })}
             </div>
         </div>
     )
 }
 
-function FullTeamWeekBlock(timeMap: FullTeamWeekBlockProps) {
-    
-}
+/**
+ * Single week time blocks displaying each team member's contributions
+ */
+function FullTeamWeekBlock(props: TeamWeekBlockProps) {
+    const {members, week} = props;
+    const startDay = new Date(week.startDay);
+    let teamTotal = 0;
+    let inTotals = new Array(members.length).fill(0);
 
-function SingleUserWeekBlock(props: SingleUserWeekBlockProps) {
-    let runningWorkTotal = 0;
+    const daysInWeek = Array.from({ length: 7 }, (_, i) => i);
+    const membersInTeam = Array.from({ length: members.length}, (_, i) => i);
 
     return (
-        <Table className="w-full table-auto mb-10">
+        <Card className="mb-10">
+        <Table className="w-full table-auto">
             <TableHeader>
                 <TableRow>
-                    <TableHead className="w-1/3 text-bold">{props.label}</TableHead>
-                    <TableHead className="w-1/3">Hours Worked</TableHead>
-                    <TableHead className="w-1/3 text-right">Running Total</TableHead>
+                    <TableHead className="text-bold w-[15%]">{week.label}</TableHead>
+                    {members.map((member) => {
+                        return <TableHead key={member} className="text-center w-[14%]">{member}</TableHead>
+                    })}
+                    <TableHead className="text-right w-[15%]"> Running Total (Hours)</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {props.hoursWorked.map((time, index) => (
-                    <TableRow key={dateIterate(props.startDay, index).toString()}>
-                        <TableCell>
-                            {formatDate(dateIterate(props.startDay, index))}
-                        </TableCell>
-                        <TableCell>
-                            {time.toFixed(1)}
-                        </TableCell>
-                        <TableCell className="text-right">
-                            {(runningWorkTotal += time).toFixed(1)}
-                        </TableCell>
-                    </TableRow>
-                ))}
+               {
+                daysInWeek.map(day => {
+                    return (
+                        <TableRow key={day}>
+                            <TableCell>{formatDate(incrementDate(startDay, day))}</TableCell>
+                            {membersInTeam.map((memNum) => {
+                                teamTotal += week.hours[memNum][day];
+                                inTotals[memNum] += week.hours[memNum][day];
+                                return <TableCell key={memNum} className="text-center"> {week.hours[memNum][day].toFixed(1)} </TableCell>
+                            })}
+                            <TableCell className="text-right">{teamTotal.toFixed(1)}</TableCell>
+                        </TableRow>
+                    );
+                })
+               }
             </TableBody>
             <TableFooter>
                 <TableRow>
                     <TableCell>Weekly Total</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell className="text-right">
-                        {runningWorkTotal.toFixed(1)} Hours
-                    </TableCell>
+                    {membersInTeam.map((memNum) => {
+                        return <TableCell key={memNum} className="text-center">{inTotals[memNum].toFixed(1)}</TableCell>
+                    })}
+                    <TableCell className="text-right">{teamTotal.toFixed(1)}</TableCell>
                 </TableRow>
             </TableFooter>
         </Table>
+        </Card>
     );
 }
 
