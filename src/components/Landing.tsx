@@ -12,6 +12,10 @@ function Landing() {
             </div>
             <div className="container">
                 <img src={landingPhoto} alt="Floor plan being processed to a security plan" className="w-full" />
+                <h3 className="text-2xl font-bold mb-2">Project Overview</h3>
+                <p>
+                    This project represents a capstone effort designed to prepare students for real-world industry work. It uses artificial intelligence to solve a complex issue. The system is built on a robust framework that interprets items and analyzes data for actionable outcomes.
+                </p>
             </div>
         </div>
     );
