@@ -5,6 +5,7 @@ import charlesHeadshot from "../assets/headshots/charles-headshot.webp";
 import dylanHeadshot from "../assets/headshots/dylan-headshot.webp";
 import chrisHeadshot from "../assets/headshots/chris-headshot.webp"
 import reidHeadshot from "../assets/headshots/reid-headshot.webp"
+import joshuaHeadshot from "../assets/headshots/joshua-headshot.webp"
 
 
 function TeamOverview() {
@@ -20,6 +21,8 @@ function TeamOverview() {
 
     const chrisBio = "Chris Wake is a graduate of Rochester Institute of Technology and Florida Atlantic University. He brings over 30 years of experience in the software industry, having held roles in both software engineering and management. After six years as an adjunct professor at RIT, Chris transitioned from the corporate world to academia full-time, joining the Software Engineering department as a lecturer. His most recent industry role was as Senior Director of Editorial Tools at Reuters News, where he led teams developing tools for global journalism."
 
+    const joshuaBio = "Joshua Rubin is currently in his 3rd year as a software engineering major at RIT. He has experience working on full-stack applications and is interested in creating reliable and user-friendly software in a team setting. Joshua enjoys programming, snowboarding, music, and chess. He is also currently working as a Student Manager at Midnight Oil, where he has learned good communication, collaboration, and leadership skills. He is also into freelance and commercial 3D modeling."
+
     return (
         <div>
             <div className="container pt-5">
@@ -29,13 +32,14 @@ function TeamOverview() {
                 <hr className="my-4" />
             </div>
 
-            <div className="container grid gap-4 grid-cols-1 lg:grid-cols-2">
-                <TeamMemberCard name="Charles Von Goins II" role="Project Lead" bio={charlesBio} profilePicUrl={charlesHeadshot}/>
-                <TeamMemberCard name="Dylan Morton" role="Integration/Devops Lead" bio={dylanBio} profilePicUrl={dylanHeadshot}/>
-                <TeamMemberCard name="Joseph Moran" role="Communications Lead" bio={joeBio} profilePicUrl={joeHeadshot}/>
-                <TeamMemberCard name="Josiah Claudio" role="Backend Lead" bio={josiahBio} profilePicUrl={josiahHeadshot}/>
-                <TeamMemberCard name="Reid Taylor" role="Backend Lead" bio={reidBio} profilePicUrl={reidHeadshot}/>
-                <TeamMemberCard name="Christopher Wake" role="Faculty Coach" bio={chrisBio} profilePicUrl={chrisHeadshot}/>
+            <div className="container flex flex-wrap justify-center gap-4">
+                <TeamMemberCard name="Charles Von Goins II" role="Project Lead" bio={charlesBio} profilePicUrl={charlesHeadshot} />
+                <TeamMemberCard name="Dylan Morton" role="Integration/Devops Lead" bio={dylanBio} profilePicUrl={dylanHeadshot} />
+                <TeamMemberCard name="Joseph Moran" role="Communications Lead" bio={joeBio} profilePicUrl={joeHeadshot} />
+                <TeamMemberCard name="Josiah Claudio" role="Backend Lead" bio={josiahBio} profilePicUrl={josiahHeadshot} />
+                <TeamMemberCard name="Reid Taylor" role="Backend Lead" bio={reidBio} profilePicUrl={reidHeadshot} />
+                <TeamMemberCard name="Joshua Rubin" role="Spring Co-op" bio={joshuaBio} profilePicUrl={joshuaHeadshot} />
+                <TeamMemberCard name="Christopher Wake" role="Faculty Coach" bio={chrisBio} profilePicUrl={chrisHeadshot} />
             </div>
         </div>
     );
@@ -43,10 +47,10 @@ function TeamOverview() {
 
 function TeamMemberCard({ name, role, bio, profilePicUrl }: { name: string; role: string; bio: string, profilePicUrl: string }) {
     return (
-        <Card className="mb-4">
+        <Card className="mb-4 w-full lg:w-[calc(50%-1rem)]">
             <div className="flex flex-col h-full md:flex-row">
                 <div className="card-left flex items-center flex-shrink-0 justify-center">
-                    <img className="h-40 w-40 m-4 rounded-full" src={profilePicUrl} alt={`${name}'s profile`}/>
+                    <img className="h-40 w-40 m-4 rounded-full" src={profilePicUrl} alt={`${name}'s profile`} />
                 </div>
                 <div className="card-right w-full pl-0">
                     <CardHeader className="pb-1 text-center md:text-left">
@@ -64,7 +68,7 @@ function TeamMemberCard({ name, role, bio, profilePicUrl }: { name: string; role
                     </CardContent>
                 </div>
             </div>
-           
+
         </Card>
     );
 }
